@@ -7,6 +7,7 @@ const errHandler = (err, _req, res, _next) => {
         err,
     )}`;
     console.error(statusLog);
+    console.error(err);
 
     switch (name) {
         default:

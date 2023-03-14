@@ -15,5 +15,9 @@ module.exports = new Schema({
     selesai: {
         type: Boolean,
         default: false,
+    },
+    deletedAt: {
+        type: Date,
+        default: null
     }
 });
