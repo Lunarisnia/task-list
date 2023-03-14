@@ -18,6 +18,26 @@ const addTugas = async (req, res) => {
     res.send({ data: tugas });
 }
 
+const readAllTugasJoiSchema = joi.object({
+    page: joi.number().default(0).required(),
+    perPage: joi.number().default(10).required(),
+}).required();
+
+const readAllTugas = async (req, res) => {
+    requestHelper.schemaValidationWrapper(readAllTugasJoiSchema, req.query, { allowUnknown: false });
+    const { page, perPage } = req.query;
+    const tugases = await tugasServices.readAll({}, page, perPage);
+    const totalTugas = await tugasServices.countTotal();
+
+    res.send({
+        page,
+        perPage,
+        totalData: totalTugas,
+        data: tugases
+    })
+}
+
 module.exports = {
     addTugas,
+    readAllTugas
 }
