@@ -44,9 +44,16 @@ const readOneTugas = async (req, res) => {
     res.send({ data: tugas });
 }
 
+const updateTugasJoiSchema = joi.object({
+    judul: joi.string().optional(),
+    deskripsi: joi.string().optional().allow(""),
+    selesai: joi.boolean().optional()
+}).required();
+
 const updateTugas = async (req, res) => {
     const { id } = req.params;
 
+    requestHelper.schemaValidationWrapper(updateTugasJoiSchema, req.body, { allowUnknown: false });
     const { judul, deskripsi, selesai } = req.body;
     await tugasServices.updateTugas(id, judul, deskripsi, selesai);
 
