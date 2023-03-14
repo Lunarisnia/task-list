@@ -61,9 +61,17 @@ const updateTugas = async (req, res) => {
     res.send({ data: tugas });
 }
 
+const deleteTugas = async (req, res) => {
+    const { id } = req.params;
+    await tugasServices.deleteTugas(id);
+
+    res.send({ data: `${id} is deleted.`})
+}
+
 module.exports = {
     addTugas,
     readAllTugas,
     readOneTugas,
-    updateTugas
+    updateTugas,
+    deleteTugas
 }

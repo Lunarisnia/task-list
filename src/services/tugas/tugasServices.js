@@ -16,11 +16,11 @@ class TugasServices {
     }
 
     async countTotal(query = {}) {
-        return Tugas.count(query);
+        return Tugas.count({ ...query, deletedAt: null });
     }
 
     async readAll(query = {}, page = 0, perPage = 10) {
-        const tugases = await Tugas.find(query, null, { skip: perPage * page, limit: perPage });
+        const tugases = await Tugas.find({ ...query, deletedAt: null }, null, { skip: perPage * page, limit: perPage });
         return tugases;
     }
 
@@ -35,6 +35,12 @@ class TugasServices {
             judul,
             deskripsi,
             selesai
+        });
+    }
+
+    async deleteTugas(id) {
+        await Tugas.findByIdAndUpdate(new Types.ObjectId(id), {
+            deletedAt: new Date(),
         });
     }
 }
