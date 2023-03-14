@@ -44,8 +44,19 @@ const readOneTugas = async (req, res) => {
     res.send({ data: tugas });
 }
 
+const updateTugas = async (req, res) => {
+    const { id } = req.params;
+
+    const { judul, deskripsi, selesai } = req.body;
+    await tugasServices.updateTugas(id, judul, deskripsi, selesai);
+
+    const tugas = await tugasServices.readOne(id);
+    res.send({ data: tugas });
+}
+
 module.exports = {
     addTugas,
     readAllTugas,
-    readOneTugas
+    readOneTugas,
+    updateTugas
 }

@@ -26,8 +26,16 @@ class TugasServices {
 
     async readOne(id) {
         const tugas = await Tugas.findById(new Types.ObjectId(id));
-        if(!tugas) throw new ResourceNotFoundError("Invalid Tugas ID");
+        if (!tugas) throw new ResourceNotFoundError("Invalid Tugas ID");
         return tugas;
+    }
+
+    async updateTugas(id, judul, deskripsi, selesai) {
+        await Tugas.findByIdAndUpdate(new Types.ObjectId(id), {
+            judul,
+            deskripsi,
+            selesai
+        });
     }
 }
 
