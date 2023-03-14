@@ -37,7 +37,15 @@ const readAllTugas = async (req, res) => {
     })
 }
 
+const readOneTugas = async (req, res) => {
+    const { id } = req.params;
+    const tugas = await tugasServices.readOne(id);
+
+    res.send({ data: tugas });
+}
+
 module.exports = {
     addTugas,
-    readAllTugas
+    readAllTugas,
+    readOneTugas
 }

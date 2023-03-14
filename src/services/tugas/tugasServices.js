@@ -1,6 +1,8 @@
 'use strict';
 
+const { Types } = require("mongoose");
 const { Tugas } = require("../../databases/models/tugas.model");
+const { ResourceNotFoundError } = require("../error/errorTypes");
 
 class TugasServices {
     constructor() {
@@ -20,6 +22,12 @@ class TugasServices {
     async readAll(query = {}, page = 0, perPage = 10) {
         const tugases = await Tugas.find(query, null, { skip: perPage * page, limit: perPage });
         return tugases;
+    }
+
+    async readOne(id) {
+        const tugas = await Tugas.findById(new Types.ObjectId(id));
+        if(!tugas) throw new ResourceNotFoundError("Invalid Tugas ID");
+        return tugas;
     }
 }
 
